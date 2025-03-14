@@ -196,3 +196,28 @@ pipeline:
                     isAutoRejectEnabled: false
                     approverInputs: []
         tags: {}
+    - stage:
+        name: ECS deployment pipeline
+        identifier: ECS_deployment_pipeline
+        description: ""
+        type: Pipeline
+        spec:
+          org: default
+          pipeline: Deploy_to_ECS
+          project: CICD_NodeJs_Terraform_ECS
+          inputs:
+            identifier: Deploy_to_ECS
+            stages:
+              - stage:
+                  identifier: Deplot_to_ECS
+                  type: Deployment
+                  spec:
+                    service:
+                      serviceInputs:
+                        serviceDefinition:
+                          type: ECS
+                          spec:
+                            artifacts:
+                              primary:
+                                primaryArtifactRef: <+input>
+                                sources: <+input>
